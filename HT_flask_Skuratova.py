@@ -4,6 +4,7 @@ import sqlite3
 import httpagentparser
 from geopy.geocoders import Nominatim
 import datetime
+from waitress import serve
 
 from flask import Flask, redirect, request, url_for
 from flask_login import (
@@ -19,6 +20,10 @@ import requests
 
 from db import init_db_command
 from user import User
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
@@ -72,6 +77,7 @@ def login():
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
         redirect_uri=request.base_url + "/callback",
+        #redirect_uri="http://localhost:8080/login/callback",
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)
@@ -209,4 +215,5 @@ def weather_date(city, date):
     return review
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    #app.run(ssl_context="adhoc")
+    serve(app, host='0.0.0.0', port=8080, threads=1)
