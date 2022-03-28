@@ -2,6 +2,7 @@
 
 
 get pods, deployment, replicaset, secret:
+
 ![pods, deployment, replicaset, secret](https://user-images.githubusercontent.com/86873866/160459212-63110769-1929-48a0-834b-0fb54a6edab0.png)
 
 port forwarding:
